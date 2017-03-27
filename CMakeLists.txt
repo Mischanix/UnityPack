@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 project(unitydata)
 
 set(LIB_SRC
+	src/Serialize.cpp
 	src/SerializedFile.cpp)
 
 set(CLI_SRC

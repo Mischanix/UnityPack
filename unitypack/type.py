@@ -1,3 +1,4 @@
+import logging
 from io import BytesIO
 from .enums import RuntimePlatform
 from .resources import get_resource, STRINGS_DAT
@@ -117,6 +118,8 @@ class TypeMetadata:
 
 		if format >= 13:
 			has_type_trees = buf.read_boolean()
+			if not has_type_trees:
+				logging.warning("Asset %r has no type trees -- type information may be incorrect", self.asset)
 			num_types = buf.read_int()
 
 			for i in range(num_types):

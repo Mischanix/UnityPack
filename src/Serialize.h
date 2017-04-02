@@ -93,6 +93,11 @@ enum Flags {
 	ConditionalElse = 0x40,
 	// This node has a scalar value which should serialize exactly 4 bytes
 	ValueIs32Bit = 0x80,
+	// This node contains a structure which is serialized recursively.
+	Recursive = 0x100,
+	// This node contains the count for an N-Ary tree node's children, where the serializer
+	// will recurse to the beginning of the current sibling list to serialize each child.
+	TreeNodeChildCount = 0x200,
 	// Align the stream to the next 4-byte boundary before serializing this node
 	PreAlign = 0x2000,
 	// Align the stream to the next 4-byte boundary after serializing this node

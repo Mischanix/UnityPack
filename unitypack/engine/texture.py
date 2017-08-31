@@ -88,6 +88,8 @@ IMPLEMENTED_FORMATS = (
 	TextureFormat.DXT1Crunched,
 	TextureFormat.DXT5,
 	TextureFormat.DXT5Crunched,
+	TextureFormat.ETC_RGB4,
+	TextureFormat.ETC2_RGBA8,
 )
 
 
@@ -159,6 +161,12 @@ class Texture2D(Texture):
 		elif self.format in (TextureFormat.DXT5, TextureFormat.DXT5Crunched):
 			codec = "bcn"
 			args = (3, )
+		elif self.format == TextureFormat.ETC_RGB4:
+			codec = "etc"
+			args = (1, )
+		elif self.format == TextureFormat.ETC2_RGBA8:
+			codec = "etc"
+			args = (3)
 		else:
 			codec = "raw"
 			args = (self.format.pixel_format, )

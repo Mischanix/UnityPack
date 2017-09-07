@@ -81,7 +81,16 @@ class ObjectInfo:
 		buf = self.asset._buf
 		buf.seek(self.asset._buf_ofs + self.data_offset)
 		object_buf = buf.read(self.size)
-		return self.read_value(self.type_tree, BinaryReader(BytesIO(object_buf)))
+		result = self.read_value(self.type_tree, BinaryReader(BytesIO(object_buf)))
+		d = getattr(result, "_obj", None)
+		if d is None:
+			d = result
+		if type(d) is OrderedDict:
+			pptr = ObjectPointer(self.type_tree, self.asset)
+			pptr.file_id = 0
+			pptr.path_id = self.path_id
+			d['this'] = pptr
+		return result
 
 	def read_value(self, type, buf):
 		align = False

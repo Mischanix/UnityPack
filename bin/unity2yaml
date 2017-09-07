@@ -4,6 +4,7 @@ import sys
 import unitypack
 import yaml
 from argparse import ArgumentParser
+from collections import OrderedDict
 from unitypack.asset import Asset
 from unitypack.object import ObjectPointer
 
@@ -24,6 +25,11 @@ def objectpointer_representer(dumper, data):
 	return dumper.represent_sequence("!PPtr", [data.file_id, data.path_id])
 yaml.add_representer(ObjectPointer, objectpointer_representer)
 
+
+def ordereddict_representer(dumper, data):
+	return dumper.represent_mapping(
+		yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, data.items())
+yaml.add_representer(OrderedDict, ordereddict_representer)
 
 def unityobj_representer(dumper, data):
 	return dumper.represent_mapping("!unitypack:%s" % (data.__class__.__name__), data._obj)
